@@ -51,30 +51,45 @@ const App = () => {
     const pdf = new jsPDF({
       orientation: "landscape",
       unit: "pt",
-      format: [288, 144],
+      format: "a4",
     });
 
     jsonData.forEach((data, index) => {
-      const startY = 10 + index * 144;
+      const startY = 20 + index * 160; // Adjust the Y offset for each new entry
 
       pdf.setFont("helvetica");
       pdf.setFontSize(10);
 
       const tripStartDate = new Date((data["Trip Start Date"] - (25567 + 2)) * 86400 * 1000);
+      const formattedDate = format(tripStartDate, "dd/MM/yyyy");
 
+      // Header information
       pdf.text(`Name: ${data["Guest Name"]}`, 10, startY + 20);
-      pdf.text(`Date: ${format(tripStartDate, "dd/MM/yyyy")}`, 10, startY + 35);
-      pdf.text(`From: ${data["Guest Route Start City"]} - To: ${data["Guest Route End City"]}`, 10, startY + 50);
-      pdf.text(`Coach: ${data["Ord # 1"]} Seat: ${data["Seat # 1"]}`, 10, startY + 65);
+      pdf.text(`Date: ${formattedDate}`, 10, startY + 40);
 
+      // Detailed service information --- should be in one column
+      pdf.text(`Service: ${data["Item Category 1"]}`, 10, startY + 60);
+      pdf.text(`Coach: ${data["Ord # 1"]}`, 150, startY + 60);
+      pdf.text(`Seat: ${data["Seat # 1"]}`, 300, startY + 60);
+
+      // Route information - --- should be in one column
+      pdf.text(`From: ${data["Guest Route Start City"]}`, 10, startY + 80);
+      pdf.text(`To: ${data["Guest Route End City"]}`, 150, startY + 80);
+
+      // Accommodation information (if available) = --- should be in one column
+      const hotelInfo = data["Pre-Rail Accommodation 2"] ? `Hotel: ${data["Pre-Rail Accommodation 2"]}` : "";
+      pdf.text(hotelInfo, 300, startY + 80);
+
+      // Draw box around the ticket info
       pdf.setDrawColor(0);
       pdf.setLineWidth(1);
-      pdf.rect(5, startY + 5, 278, 75);
+      pdf.rect(5, startY + 5, 580, 100); // Adjust the box size
 
+      // Optional: draw horizontal lines to separate sections if needed
       if (index > 0) {
         pdf.setDrawColor(0);
         pdf.setLineWidth(1);
-        pdf.line(0, startY, 288, startY);
+        pdf.line(5, startY, 585, startY);
       }
     });
 
