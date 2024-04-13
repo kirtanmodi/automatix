@@ -52,28 +52,6 @@ const App = () => {
     });
   }, []);
 
-  // Function to download JSON data as PDF
-  // const downloadPDF = (jsonData) => {
-  //   const pdf = new jsPDF("l", "mm", "a4"); // landscape orientation
-  //   pdf.autoTable({
-  //     head: [Object.keys(jsonData[0])],
-  //     body: jsonData.map((row) => Object.values(row).map(String)), // Convert all values to strings
-  //     theme: "grid",
-  //     styles: { cellWidth: "wrap" }, // use 'wrap' to avoid text overflow
-  //     columnStyles: { text: { cellWidth: "auto" } }, // 'auto' will only use as much space as needed
-  //     margin: { top: 10 },
-  //     headStyles: { fillColor: [22, 160, 133] }, // Example of styling header color
-  //     didDrawCell: (data) => {
-  //       // If text is too long for cell, add ellipsis
-  //       if (data.column.dataKey !== "id" && data.cell.raw != null && pdf.getStringUnitWidth(data.cell.raw) > data.cell.width - 2) {
-  //         const text = data.cell.raw.substring(0, 30) + "..."; // Trim text
-  //         pdf.text(text, data.cell.x + 2, data.cell.y + 10);
-  //       }
-  //     },
-  //   });
-  //   pdf.save("download.pdf");
-  // };
-
   const downloadPDF = (jsonData) => {
     const pdf = new jsPDF({
       orientation: "landscape",
@@ -85,6 +63,10 @@ const App = () => {
       // Adjust starting Y position based on the number of tickets
       const startY = 10 + index * 144; // Height of one ticket is 144 points (2 inches)
 
+      // Set font settings
+      pdf.setFont("helvetica"); // You can change this to 'times', 'courier', etc.
+      pdf.setFontSize(10); // Adjust font size as needed
+
       // Format date correctly
       const tripStartDate = new Date((data["Trip Start Date"] - (25567 + 2)) * 86400 * 1000);
 
@@ -93,7 +75,11 @@ const App = () => {
       pdf.text(`Date: ${format(tripStartDate, "dd/MM/yyyy")}`, 10, startY + 35);
       pdf.text(`From: ${data["Guest Route Start City"]} - To: ${data["Guest Route End City"]}`, 10, startY + 50);
       pdf.text(`Coach: ${data["Ord # 1"]} Seat: ${data["Seat # 1"]}`, 10, startY + 65);
-      // ... more details as required ...
+
+      // Draw rectangle around the ticket details
+      pdf.setDrawColor(0); // Black color
+      pdf.setLineWidth(1); // Line thickness
+      pdf.rect(5, startY + 5, 278, 75); // Adjust the rectangle size as needed
 
       // If this is not the first ticket, draw a separator line
       if (index > 0) {
