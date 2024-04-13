@@ -1,8 +1,6 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import * as XLSX from "xlsx";
-import PdfPrinter from "pdfmake/build/pdfmake";
-import vfsFonts from "pdfmake/build/vfs_fonts";
 
 const App = () => {
   // Function to handle file drop
@@ -49,37 +47,6 @@ const App = () => {
 
   // Setup the dropzone
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  const createPdf = (data) => {
-    try {
-      const { vfs } = vfsFonts.pdfMake;
-      PdfPrinter.vfs = vfs;
-
-      const documentDefinition = {
-        content: [
-          {
-            table: {
-              headerRows: 1,
-              widths: "*",
-              body: buildTableBody(data),
-            },
-            layout: "lightHorizontalLines",
-          },
-        ],
-      };
-
-      const pdfDocGenerator = PdfPrinter.createPdf(documentDefinition);
-      pdfDocGenerator.download("trip-details.pdf");
-    } catch (error) {
-      console.error("Failed to create PDF:", error);
-    }
-  };
-
-  const buildTableBody = (data) => {
-    const headers = Object.keys(data[0]).map((key) => ({ text: key, style: "tableHeader" }));
-    const body = data.map((record) => Object.values(record).map((value) => value.toString()));
-    return [headers, ...body];
-  };
 
   return (
     <div {...getRootProps()} style={{ border: "2px dashed #007bff", padding: "20px", textAlign: "center" }}>
