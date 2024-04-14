@@ -54,8 +54,16 @@ const App = () => {
       format: "a4",
     });
 
+    let entriesPerPage = 4;
+    let entriesCurrentPage = 0;
+    let startY = 20;
+
     jsonData.forEach((data, index) => {
-      const startY = 20 + index * 160; // Adjust the Y offset for each new entry
+      if (entriesCurrentPage >= entriesPerPage) {
+        pdf.addPage();
+        entriesCurrentPage = 0; // Reset counter
+        startY = 20; // Reset startY for new page
+      }
 
       pdf.setFont("helvetica");
       pdf.setFontSize(10);
@@ -72,11 +80,11 @@ const App = () => {
       pdf.text(`Coach: ${data["Ord # 1"]}`, 150, startY + 60);
       pdf.text(`Seat: ${data["Seat # 1"]}`, 300, startY + 60);
 
-      // Route information - --- should be in one column
+      // Route information
       pdf.text(`From: ${data["Guest Route Start City"]}`, 10, startY + 80);
       pdf.text(`To: ${data["Guest Route End City"]}`, 150, startY + 80);
 
-      // Accommodation information (if available) = --- should be in one column
+      // Accommodation information (if available)
       const hotelInfo = data["Pre-Rail Accommodation 2"] ? `Hotel: ${data["Pre-Rail Accommodation 2"]}` : "";
       pdf.text(hotelInfo, 300, startY + 80);
 
@@ -85,12 +93,8 @@ const App = () => {
       pdf.setLineWidth(1);
       pdf.rect(5, startY + 5, 580, 100); // Adjust the box size
 
-      // Optional: draw horizontal lines to separate sections if needed
-      if (index > 0) {
-        pdf.setDrawColor(0);
-        pdf.setLineWidth(1);
-        pdf.line(5, startY, 585, startY);
-      }
+      startY += 120; // Increase startY for next entry
+      entriesCurrentPage++; // Increment the counter
     });
 
     pdf.save("ticket.pdf");
