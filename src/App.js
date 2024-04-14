@@ -177,9 +177,9 @@ const App = () => {
       // THIRD SECTION
       pdf.setFontSize(10);
       pdf.setFont("helvetica", "bold");
-      pdf.text(`Service: ${data["Item Category 3"] || "N/A"}`, FIRST_ROW, startY + SEVENTH_COL);
-      pdf.text(`Coach: ${data["Ord # 3"] || "N/A"}`, FIRST_ROW, startY + EIGHTH_COL);
-      pdf.text(`Seat: ${data["Seat # 3"] || "N/A"}`, FIRST_ROW, startY + NINTH_COL);
+      pdf.text(`Service: ${data["Item Category 2"] || "N/A"}`, FIRST_ROW, startY + SEVENTH_COL);
+      pdf.text(`Coach: ${data["Ord # 2"] || "N/A"}`, FIRST_ROW, startY + EIGHTH_COL);
+      pdf.text(`Seat: ${data["Seat # 2"] || "N/A"}`, FIRST_ROW, startY + NINTH_COL);
       pdf.setFont("helvetica", "normal");
 
       const startCity3 = data["Guest Route Start City"] === "Vancouver" ? "Vancouver Train Station" : data["Guest Route Start City"] || "N/A";
