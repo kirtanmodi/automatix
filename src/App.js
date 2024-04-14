@@ -10,13 +10,6 @@ import momnetTz from "moment-timezone";
 import styled from "@emotion/styled";
 import { Button, Paper, Typography } from "@mui/material";
 
-const StyledPaper = styled(Paper)({
-  border: "2px dashed #007bff",
-  padding: "20px",
-  textAlign: "center",
-  marginBottom: "20px",
-});
-
 const FIRST_ROW = 10;
 const SECOND_ROW = 200;
 const THIRD_ROW = 400;
@@ -34,9 +27,12 @@ const RECT_HEIGHT = 130;
 
 const App = () => {
   const [jsonToPrint, setJsonToPrint] = useState([]);
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
+  const [fileName, setFileName] = useState("");
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
+      setFileName(file.name); // Set the name of the file for displaying
       const reader = new FileReader();
 
       reader.onload = (event) => {
@@ -58,16 +54,19 @@ const App = () => {
               return obj;
             });
 
-            console.log(jsonData);
+            console.log(jsonData); // Keeping this for debug purposes
             setJsonToPrint(jsonData);
+            setIsFileUploaded(true);
           }
         } catch (error) {
           console.error("Error reading the file:", error);
+          alert("Error processing the file, please check the console for details.");
         }
       };
 
       reader.onerror = (error) => {
         console.error("Error reading the file:", error);
+        alert("Error reading the file, please check the console for details.");
       };
 
       reader.readAsBinaryString(file);
@@ -139,21 +138,28 @@ const App = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div className="p-5 space-y-6 bg-gray-50 text-gray-800">
-      <Typography variant="h2" gutterBottom className="font-bold">
-        Rocky Mountain Ticket System
-      </Typography>
-      <StyledPaper {...getRootProps()} className="cursor-pointer hover:shadow-md hover:bg-gray-200 transition duration-300 ease-in-out">
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <Typography>Drop the file here...</Typography>
-        ) : (
-          <Typography>Drag 'n' drop an Excel file here, or click to select a file</Typography>
-        )}
-      </StyledPaper>
-      <Button variant="contained" color="primary" className="shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300">
-        Download PDF
-      </Button>
+    <div className="min-h-screen bg-gray-50 text-gray-800">
+      <header className="bg-blue-800 text-white py-4">
+        <h1 className="text-3xl font-bold text-center">Rocky Mountain Ticket System</h1>
+      </header>
+      <div className="p-5 space-y-4">
+        <div
+          {...getRootProps()}
+          className="cursor-pointer p-4 border-2 border-gray-300 border-dashed rounded hover:shadow-md hover:bg-gray-200 transition duration-300 ease-in-out flex justify-center items-center"
+        >
+          <input {...getInputProps()} />
+          {isDragActive ? <p>Drop the file here...</p> : <p>Drag 'n' drop an Excel file here, or click to select a file</p>}
+        </div>
+        {isFileUploaded && <div className="text-green-500 text-sm mt-2">File uploaded: {fileName}</div>}
+        <button
+          variant="contained"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out disabled:opacity-50"
+          disabled={jsonToPrint.length === 0}
+          onClick={() => downloadPDF(jsonToPrint)}
+        >
+          Download PDF
+        </button>
+      </div>
     </div>
   );
 };
