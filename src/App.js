@@ -174,7 +174,7 @@ const App = () => {
         >
           Download PDF
         </button>
-        {isFileUploaded && (
+        {/* {isFileUploaded && (
           <button
             className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out disabled:opacity-50 m-1"
             disabled={jsonToPrint.length === 0}
@@ -183,7 +183,7 @@ const App = () => {
             Preview First Entry
           </button>
         )}
-        {showPreview && jsonToPrint.length > 0 && <TicketPreview data={jsonToPrint[0]} />}
+        {showPreview && jsonToPrint.length > 0 && <TicketPreview data={jsonToPrint[0]} />} */}
       </div>
     </div>
   );
