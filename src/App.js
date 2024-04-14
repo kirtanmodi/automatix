@@ -121,15 +121,15 @@ const App = () => {
 
       const startCity = data["Guest Route Start City"] === "Vancouver" ? "Vancouver Train Station" : data["Guest Route Start City"];
       pdf.text(`From: ${startCity}`, SECOND_ROW, startY + FIRST_COL);
-      const firstHotelStart = data["Pre-Rail Accommodation 1"] ? `Hotel: ${data["Pre-Rail Accommodation 1"]}` : "N/A";
-      pdf.text(firstHotelStart, SECOND_ROW, startY + SECOND_COL);
+      const firstHotelStart = data["Pre-Rail Accommodation 1"] ? `${data["Pre-Rail Accommodation 1"]}` : "N/A";
+      pdf.text(`Hotel: ${firstHotelStart}`, SECOND_ROW, startY + SECOND_COL);
       const Transfer1 = data["Pre-Rail Transfer Pickup 1"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Pre-Rail Transfer Pickup 1"];
       pdf.text(`Transfer: ${Transfer1}`, SECOND_ROW, startY + THIRD_COL);
 
       const endCity = data["Mgmt Leg 1"] === "Vancouver - Kamloops" ? "Kamloops Train Station" : data["Guest Route End City"];
       pdf.text(`To: ${endCity}`, THIRD_ROW, startY + FIRST_COL);
-      const firstHotelEnd = data["Accommodation Item Name - Same Day 1"] ? `Hotel: ${data["Accommodation Item Name - Same Day 1"]}` : "N/A";
-      pdf.text(firstHotelEnd, THIRD_ROW, startY + SECOND_COL);
+      const firstHotelEnd = data["Accommodation Item Name - Same Day 1"] ? `${data["Accommodation Item Name - Same Day 1"]}` : "N/A";
+      pdf.text(`Hotel: ${firstHotelEnd}`, THIRD_ROW, startY + SECOND_COL);
       const Transfer2 = data["Pre-Rail Transfer Pickup 2"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Post-Rail Transfer Pickup 2"];
       pdf.text(`Transfer: ${Transfer2}`, THIRD_ROW, startY + THIRD_COL);
 
