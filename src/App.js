@@ -33,6 +33,12 @@ const App = () => {
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       setFileName(file.name); // Set the name of the file for displaying
+      const fileExtension = file.name.split(".").pop();
+      if (fileExtension !== "xls" && fileExtension !== "xlsx") {
+        alert("Please upload an Excel file.");
+        return;
+      }
+
       const reader = new FileReader();
 
       reader.onload = (event) => {
@@ -72,7 +78,6 @@ const App = () => {
       reader.readAsBinaryString(file);
     });
   }, []);
-
   const downloadPDF = (jsonData) => {
     const pdf = new jsPDF({
       orientation: "landscape",
