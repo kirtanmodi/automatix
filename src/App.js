@@ -12,7 +12,7 @@ import { Button, Paper, Typography } from "@mui/material";
 
 const FIRST_ROW = 10;
 const SECOND_ROW = 200;
-const THIRD_ROW = 400;
+const THIRD_ROW = 470;
 
 const BOOKING_COL = 20;
 const NAME_COL = 40;
@@ -22,7 +22,7 @@ const FIRST_COL = 80;
 const SECOND_COL = 100;
 const THIRD_COL = 120;
 
-const RECT_WIDTH = 530;
+const RECT_WIDTH = THIRD_ROW + 200;
 const RECT_HEIGHT = 130;
 
 const App = () => {
@@ -133,7 +133,7 @@ const App = () => {
       pdf.setLineWidth(1);
       pdf.rect(5, startY + 5, RECT_WIDTH, RECT_HEIGHT);
 
-      startY += 120;
+      startY += 140;
       entriesCurrentPage++;
     });
 
