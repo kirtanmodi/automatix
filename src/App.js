@@ -75,6 +75,8 @@ const App = () => {
       reader.onerror = (error) => {
         console.error("Error reading the file:", error);
         alert("Error reading the file, please check the console for details.");
+        setIsFileUploaded(false);
+        setFileName("");
       };
 
       reader.readAsBinaryString(file);
