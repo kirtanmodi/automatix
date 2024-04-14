@@ -168,7 +168,7 @@ const App = () => {
         {isFileUploaded && <div className="text-green-500 text-sm mt-2">File uploaded: {fileName}</div>}
         <button
           variant="contained"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out disabled:opacity-50 ml-1"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out disabled:opacity-50 m-1"
           disabled={jsonToPrint.length === 0}
           onClick={() => downloadPDF(jsonToPrint)}
         >
