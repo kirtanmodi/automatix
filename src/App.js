@@ -14,11 +14,12 @@ const FIRST_ROW = 10;
 const SECOND_ROW = 200;
 const THIRD_ROW = 470;
 
-const BOOKING_COL = 20;
+const TITLE = 25;
+const BOOKING_COL = TITLE + 25;
 // const NAME_COL = BOOKING_COL + 10;
 // const DAT_COL = NAME_COL + 10;
 
-const FIRST_COL = BOOKING_COL + 18;
+const FIRST_COL = BOOKING_COL + 16;
 const SECOND_COL = FIRST_COL + 15;
 const THIRD_COL = SECOND_COL + 15;
 const FOURTH_COL = THIRD_COL + 15;
@@ -110,6 +111,13 @@ const App = () => {
       const formattedDate = moment(epochStart).add(tripStartDate, "days").format("Do MMMM YYYY");
 
       // Header information
+      // underline the title
+      pdf.setFontSize(14);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Rocky Mountaineer", FIRST_ROW, startY + TITLE, { underline: true });
+      pdf.setLineWidth(1);
+      pdf.line(10, startY + TITLE + 5, 140, startY + TITLE + 5);
+      pdf.setLineWidth(0);
       pdf.setFontSize(12);
       pdf.setFont("helvetica", "bold");
       pdf.text(`Booking #: ${data["Booking #"] || "N/A"}`, FIRST_ROW, startY + BOOKING_COL);
@@ -200,7 +208,7 @@ const App = () => {
       pdf.setLineWidth(1);
       pdf.rect(5, startY + 5, RECT_WIDTH, RECT_HEIGHT);
 
-      startY += 170;
+      startY += 190;
       entriesCurrentPage++;
     });
     pdf.save("ticket.pdf");
