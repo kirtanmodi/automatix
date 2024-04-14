@@ -174,52 +174,9 @@ const App = () => {
         >
           Download PDF
         </button>
-        {/* {isFileUploaded && (
-          <button
-            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out disabled:opacity-50 m-1"
-            disabled={jsonToPrint.length === 0}
-            onClick={togglePreview}
-          >
-            Preview First Entry
-          </button>
-        )}
-        {showPreview && jsonToPrint.length > 0 && <TicketPreview data={jsonToPrint[0]} />} */}
       </div>
     </div>
   );
 };
 
 export default App;
-
-// TicketPreview.js
-// TicketPreview.js
-
-const TicketPreview = ({ data }) => {
-  const epochStart = "1899-12-30";
-  const formattedDate = moment(epochStart).add(data["Trip Start Date"], "days").format("Do MMMM YYYY");
-
-  return (
-    <div style={{ fontFamily: "Arial, sans-serif", padding: "20px", border: "1px solid black", width: "800px", margin: "1rem" }}>
-      <div style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>Booking #: {data["Booking #"]}</div>
-      <div style={{ marginBottom: "5px" }}>Name: {data["Guest Name"]}</div>
-      <div style={{ marginBottom: "5px" }}>Date: {formattedDate}</div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-        <div style={{ flex: 1 }}>
-          <div>Service: {data["Item Category 1"]}</div>
-          <div>Coach: {data["Ord # 1"]}</div>
-          <div>Seat: {data["Seat # 1"]}</div>
-        </div>
-        <div style={{ flex: 1 }}>
-          <div>From: {data["Guest Route Start City"] === "Vancouver" ? "Vancouver Train Station" : data["Guest Route Start City"]}</div>
-          <div>Hotel: {data["Pre-Rail Accommodation 1"] || "N/A"}</div>
-          <div>Transfer: {data["Pre-Rail Transfer Pickup 1"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Pre-Rail Transfer Pickup 1"]}</div>
-        </div>
-        <div style={{ flex: 1 }}>
-          <div>To: {data["Mgmt Leg 1"] === "Vancouver - Kamloops" ? "Kamloops Train Station" : data["Guest Route End City"]}</div>
-          <div>Hotel: {data["Accommodation Item Name - Same Day 1"] || "N/A"}</div>
-          <div>Transfer: {data["Pre-Rail Transfer Pickup 2"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Post-Rail Transfer Pickup 2"]}</div>
-        </div>
-      </div>
-    </div>
-  );
-};
