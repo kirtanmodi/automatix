@@ -7,6 +7,16 @@ import { format } from "date-fns";
 import moment from "moment";
 import momnetTz from "moment-timezone";
 
+import styled from "@emotion/styled";
+import { Button, Paper, Typography } from "@mui/material";
+
+const StyledPaper = styled(Paper)({
+  border: "2px dashed #007bff",
+  padding: "20px",
+  textAlign: "center",
+  marginBottom: "20px",
+});
+
 const FIRST_ROW = 10;
 const SECOND_ROW = 200;
 const THIRD_ROW = 400;
@@ -129,18 +139,21 @@ const App = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()} style={{ border: "2px dashed #007bff", padding: "20px", textAlign: "center" }}>
-      <input {...getInputProps()} />
-      {isDragActive ? <p>Drop the file here...</p> : <p>Drag 'n' drop an Excel file here, or click to select a file</p>}
-      <div>
-        <button
-          onClick={() => {
-            downloadPDF(jsonToPrint);
-          }}
-        >
-          Download PDF
-        </button>
-      </div>
+    <div className="p-5 space-y-6 bg-gray-50 text-gray-800">
+      <Typography variant="h2" gutterBottom className="font-bold">
+        Rocky Mountain Ticket System
+      </Typography>
+      <StyledPaper {...getRootProps()} className="cursor-pointer hover:shadow-md hover:bg-gray-200 transition duration-300 ease-in-out">
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <Typography>Drop the file here...</Typography>
+        ) : (
+          <Typography>Drag 'n' drop an Excel file here, or click to select a file</Typography>
+        )}
+      </StyledPaper>
+      <Button variant="contained" color="primary" className="shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300">
+        Download PDF
+      </Button>
     </div>
   );
 };
