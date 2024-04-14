@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/automatix/static/css/main.88e8a67e.css",
-    "main.js": "/automatix/static/js/main.13404644.js",
+    "main.css": "/automatix/static/css/main.8c66cfce.css",
+    "main.js": "/automatix/static/js/main.2bb4bb53.js",
     "static/js/239.187b45a9.chunk.js": "/automatix/static/js/239.187b45a9.chunk.js",
     "static/js/213.95148c2e.chunk.js": "/automatix/static/js/213.95148c2e.chunk.js",
     "static/js/732.25f94885.chunk.js": "/automatix/static/js/732.25f94885.chunk.js",
     "static/js/453.3e0a08b8.chunk.js": "/automatix/static/js/453.3e0a08b8.chunk.js",
     "index.html": "/automatix/index.html",
-    "main.88e8a67e.css.map": "/automatix/static/css/main.88e8a67e.css.map",
-    "main.13404644.js.map": "/automatix/static/js/main.13404644.js.map",
+    "main.8c66cfce.css.map": "/automatix/static/css/main.8c66cfce.css.map",
+    "main.2bb4bb53.js.map": "/automatix/static/js/main.2bb4bb53.js.map",
     "239.187b45a9.chunk.js.map": "/automatix/static/js/239.187b45a9.chunk.js.map",
     "213.95148c2e.chunk.js.map": "/automatix/static/js/213.95148c2e.chunk.js.map",
     "732.25f94885.chunk.js.map": "/automatix/static/js/732.25f94885.chunk.js.map",
     "453.3e0a08b8.chunk.js.map": "/automatix/static/js/453.3e0a08b8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.88e8a67e.css",
-    "static/js/main.13404644.js"
+    "static/css/main.8c66cfce.css",
+    "static/js/main.2bb4bb53.js"
   ]
 }
