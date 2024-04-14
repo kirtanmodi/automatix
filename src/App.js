@@ -4,6 +4,23 @@ import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { format } from "date-fns";
+import moment from "moment";
+import momnetTz from "moment-timezone";
+
+const FIRST_ROW = 10;
+const SECOND_ROW = 200;
+const THIRD_ROW = 400;
+
+const BOOKING_COL = 20;
+const NAME_COL = 40;
+const DAT_COL = 60;
+
+const FIRST_COL = 80;
+const SECOND_COL = 100;
+const THIRD_COL = 120;
+
+const RECT_WIDTH = 530;
+const RECT_HEIGHT = 130;
 
 const App = () => {
   const [jsonToPrint, setJsonToPrint] = useState([]);
@@ -61,40 +78,49 @@ const App = () => {
     jsonData.forEach((data, index) => {
       if (entriesCurrentPage >= entriesPerPage) {
         pdf.addPage();
-        entriesCurrentPage = 0; // Reset counter
-        startY = 20; // Reset startY for new page
+        entriesCurrentPage = 0;
+        startY = 20;
       }
 
-      pdf.setFont("helvetica");
-      pdf.setFontSize(10);
-
-      const tripStartDate = new Date((data["Trip Start Date"] - (25567 + 2)) * 86400 * 1000);
-      const formattedDate = format(tripStartDate, "dd/MM/yyyy");
+      const tripStartDate = data["Trip Start Date"];
+      const epochStart = "1899-12-30";
+      const formattedDate = moment(epochStart).add(tripStartDate, "days").format("Do MMMM YYYY");
 
       // Header information
-      pdf.text(`Name: ${data["Guest Name"]}`, 10, startY + 20);
-      pdf.text(`Date: ${formattedDate}`, 10, startY + 40);
+      pdf.setFontSize(12);
+      pdf.setFont("helvetica", "bold");
+      pdf.text(`Booking #: ${data["Booking #"]}`, FIRST_ROW, startY + BOOKING_COL);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+      pdf.text(`Name: ${data["Guest Name"]}`, FIRST_ROW, startY + NAME_COL);
+      pdf.text(`Date: ${formattedDate}`, FIRST_ROW, startY + DAT_COL);
 
-      // Detailed service information --- should be in one column
-      pdf.text(`Service: ${data["Item Category 1"]}`, 10, startY + 60);
-      pdf.text(`Coach: ${data["Ord # 1"]}`, 150, startY + 60);
-      pdf.text(`Seat: ${data["Seat # 1"]}`, 300, startY + 60);
+      // ### FIRST SECTION ###
 
-      // Route information
-      pdf.text(`From: ${data["Guest Route Start City"]}`, 10, startY + 80);
-      pdf.text(`To: ${data["Guest Route End City"]}`, 150, startY + 80);
+      pdf.text(`Service: ${data["Item Category 1"]}`, FIRST_ROW, startY + FIRST_COL);
+      pdf.text(`Coach: ${data["Ord # 1"]}`, FIRST_ROW, startY + SECOND_COL);
+      pdf.text(`Seat: ${data["Seat # 1"]}`, FIRST_ROW, startY + THIRD_COL);
 
-      // Accommodation information (if available)
-      const hotelInfo = data["Pre-Rail Accommodation 2"] ? `Hotel: ${data["Pre-Rail Accommodation 2"]}` : "";
-      pdf.text(hotelInfo, 300, startY + 80);
+      const startCity = data["Guest Route Start City"] === "Vancouver" ? "Vancouver Train Station" : data["Guest Route Start City"];
+      pdf.text(`From: ${startCity}`, SECOND_ROW, startY + FIRST_COL);
+      const firstHotelStart = data["Pre-Rail Accommodation 1"] ? `Hotel: ${data["Pre-Rail Accommodation 1"]}` : "N/A";
+      pdf.text(firstHotelStart, SECOND_ROW, startY + SECOND_COL);
+      const Transfer1 = data["Pre-Rail Transfer Pickup 1"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Pre-Rail Transfer Pickup 1"];
+      pdf.text(`Transfer: ${Transfer1}`, SECOND_ROW, startY + THIRD_COL);
 
-      // Draw box around the ticket info
+      const endCity = data["Mgmt Leg 1"] === "Vancouver - Kamloops" ? "Kamloops Train Station" : data["Guest Route End City"];
+      pdf.text(`To: ${endCity}`, THIRD_ROW, startY + FIRST_COL);
+      const firstHotelEnd = data["Accommodation Item Name - Same Day 1"] ? `Hotel: ${data["Accommodation Item Name - Same Day 1"]}` : "N/A";
+      pdf.text(firstHotelEnd, THIRD_ROW, startY + SECOND_COL);
+      const Transfer2 = data["Pre-Rail Transfer Pickup 2"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Post-Rail Transfer Pickup 2"];
+      pdf.text(`Transfer: ${Transfer2}`, THIRD_ROW, startY + THIRD_COL);
+
       pdf.setDrawColor(0);
       pdf.setLineWidth(1);
-      pdf.rect(5, startY + 5, 580, 100); // Adjust the box size
+      pdf.rect(5, startY + 5, RECT_WIDTH, RECT_HEIGHT);
 
-      startY += 120; // Increase startY for next entry
-      entriesCurrentPage++; // Increment the counter
+      startY += 120;
+      entriesCurrentPage++;
     });
 
     pdf.save("ticket.pdf");
