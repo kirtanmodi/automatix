@@ -67,6 +67,8 @@ const App = () => {
         } catch (error) {
           console.error("Error reading the file:", error);
           alert("Error processing the file, please check the console for details.");
+          setIsFileUploaded(false);
+          setFileName("");
         }
       };
 
