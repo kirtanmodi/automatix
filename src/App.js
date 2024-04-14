@@ -15,15 +15,21 @@ const SECOND_ROW = 200;
 const THIRD_ROW = 470;
 
 const BOOKING_COL = 20;
-const NAME_COL = 40;
-const DAT_COL = 60;
+// const NAME_COL = BOOKING_COL + 10;
+// const DAT_COL = NAME_COL + 10;
 
-const FIRST_COL = 80;
-const SECOND_COL = 100;
-const THIRD_COL = 120;
+const FIRST_COL = BOOKING_COL + 18;
+const SECOND_COL = FIRST_COL + 15;
+const THIRD_COL = SECOND_COL + 15;
+const FOURTH_COL = THIRD_COL + 15;
+const FIFTH_COL = FOURTH_COL + 15;
+const SIXTH_COL = FIFTH_COL + 15;
+const SEVENTH_COL = SIXTH_COL + 15;
+const EIGHTH_COL = SEVENTH_COL + 15;
+const NINTH_COL = EIGHTH_COL + 15;
 
 const RECT_WIDTH = THIRD_ROW + 200;
-const RECT_HEIGHT = 130;
+const RECT_HEIGHT = EIGHTH_COL + 15;
 
 const App = () => {
   const [jsonToPrint, setJsonToPrint] = useState([]);
@@ -109,15 +115,25 @@ const App = () => {
       pdf.text(`Booking #: ${data["Booking #"]}`, FIRST_ROW, startY + BOOKING_COL);
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      pdf.text(`Name: ${data["Guest Name"]}`, FIRST_ROW, startY + NAME_COL);
-      pdf.text(`Date: ${formattedDate}`, FIRST_ROW, startY + DAT_COL);
+      pdf.text(`Name: ${data["Guest Name"]}`, SECOND_ROW, startY + BOOKING_COL);
+      pdf.text(`Date: ${formattedDate}`, THIRD_ROW, startY + BOOKING_COL);
 
-      // ### FIRST SECTION ###
+      // Draw a horizontal line before the first section
+      const distanceFromTop = startY + BOOKING_COL + 6;
+      pdf.line(10, distanceFromTop, RECT_WIDTH - 10, distanceFromTop);
 
+      // ### FIRST SECTION ###################################################################################
+
+      // First Row
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "bold");
       pdf.text(`Service: ${data["Item Category 1"]}`, FIRST_ROW, startY + FIRST_COL);
       pdf.text(`Coach: ${data["Ord # 1"]}`, FIRST_ROW, startY + SECOND_COL);
       pdf.text(`Seat: ${data["Seat # 1"]}`, FIRST_ROW, startY + THIRD_COL);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
 
+      // Second Row
       const startCity = data["Guest Route Start City"] === "Vancouver" ? "Vancouver Train Station" : data["Guest Route Start City"];
       pdf.text(`From: ${startCity}`, SECOND_ROW, startY + FIRST_COL);
       const firstHotelStart = data["Pre-Rail Accommodation 1"] ? `${data["Pre-Rail Accommodation 1"]}` : "N/A";
@@ -125,12 +141,75 @@ const App = () => {
       const Transfer1 = data["Pre-Rail Transfer Pickup 1"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Pre-Rail Transfer Pickup 1"];
       pdf.text(`Transfer: ${Transfer1}`, SECOND_ROW, startY + THIRD_COL);
 
+      // Third Row
       const endCity = data["Mgmt Leg 1"] === "Vancouver - Kamloops" ? "Kamloops Train Station" : data["Guest Route End City"];
       pdf.text(`To: ${endCity}`, THIRD_ROW, startY + FIRST_COL);
       const firstHotelEnd = data["Accommodation Item Name - Same Day 1"] ? `${data["Accommodation Item Name - Same Day 1"]}` : "N/A";
       pdf.text(`Hotel: ${firstHotelEnd}`, THIRD_ROW, startY + SECOND_COL);
       const Transfer2 = data["Pre-Rail Transfer Pickup 2"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Post-Rail Transfer Pickup 2"];
       pdf.text(`Transfer: ${Transfer2}`, THIRD_ROW, startY + THIRD_COL);
+
+      // Draw a horizontal line before Second Section
+      const distanceFromTopForSecondSection = startY + THIRD_COL + 6;
+      pdf.line(10, distanceFromTopForSecondSection, RECT_WIDTH - 10, distanceFromTopForSecondSection);
+
+      // ### SECOND SECTION ################################################################################
+
+      // First Row
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "bold");
+      pdf.text(`Service: ${data["Item Category 2"]}`, FIRST_ROW, startY + FOURTH_COL);
+      pdf.text(`Coach: ${data["Ord # 2"]}`, FIRST_ROW, startY + FIFTH_COL);
+      pdf.text(`Seat: ${data["Seat # 2"]}`, FIRST_ROW, startY + SIXTH_COL);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+
+      // Second Row
+      const startCity2 = data["Guest Route Start City"] === "Vancouver" ? "Vancouver Train Station" : data["Guest Route Start City"];
+      pdf.text(`From: ${startCity2}`, SECOND_ROW, startY + FOURTH_COL);
+      const secondHotelStart = data["Pre-Rail Accommodation 2"] ? `${data["Pre-Rail Accommodation 2"]}` : "N/A";
+      pdf.text(`Hotel: ${secondHotelStart}`, SECOND_ROW, startY + FIFTH_COL);
+      const Transfer3 = data["Pre-Rail Transfer Pickup 3"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Pre-Rail Transfer Pickup 3"];
+      pdf.text(`Transfer: ${Transfer3}`, SECOND_ROW, startY + SIXTH_COL);
+
+      // Third Row
+      const endCity2 = data["Mgmt Leg 2"] === "Vancouver - Kamloops" ? "Kamloops Train Station" : data["Guest Route End City"];
+      pdf.text(`To: ${endCity2}`, THIRD_ROW, startY + FOURTH_COL);
+      const secondHotelEnd = data["Accommodation Item Name - Same Day 2"] ? `${data["Accommodation Item Name - Same Day 2"]}` : "N/A";
+      pdf.text(`Hotel: ${secondHotelEnd}`, THIRD_ROW, startY + FIFTH_COL);
+      const Transfer4 = data["Pre-Rail Transfer Pickup 4"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Post-Rail Transfer Pickup 4"];
+      pdf.text(`Transfer: ${Transfer4}`, THIRD_ROW, startY + SIXTH_COL);
+
+      // Draw a horizontal line before Third Section
+      const distanceFromTopForThirdSection = startY + SIXTH_COL + 6;
+      pdf.line(10, distanceFromTopForThirdSection, RECT_WIDTH - 10, distanceFromTopForThirdSection);
+
+      // ### THIRD SECTION ###################################################################################
+
+      // First Row
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "bold");
+      pdf.text(`Service: ${data["Item Category 3"]}`, FIRST_ROW, startY + SEVENTH_COL);
+      pdf.text(`Coach: ${data["Ord # 3"]}`, FIRST_ROW, startY + EIGHTH_COL);
+      pdf.text(`Seat: ${data["Seat # 3"]}`, FIRST_ROW, startY + NINTH_COL);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+
+      // Second Row
+      const startCity3 = data["Guest Route Start City"] === "Vancouver" ? "Vancouver Train Station" : data["Guest Route Start City"];
+      pdf.text(`From: ${startCity3}`, SECOND_ROW, startY + SEVENTH_COL);
+      const thirdHotelStart = data["Pre-Rail Accommodation 3"] ? `${data["Pre-Rail Accommodation 3"]}` : "N/A";
+      pdf.text(`Hotel: ${thirdHotelStart}`, SECOND_ROW, startY + EIGHTH_COL);
+      const Transfer5 = data["Pre-Rail Transfer Pickup 5"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Pre-Rail Transfer Pickup 5"];
+      pdf.text(`Transfer: ${Transfer5}`, SECOND_ROW, startY + NINTH_COL);
+
+      // Third Row
+      const endCity3 = data["Mgmt Leg 3"] === "Vancouver - Kamloops" ? "Kamloops Train Station" : data["Guest Route End City"];
+      pdf.text(`To: ${endCity3}`, THIRD_ROW, startY + SEVENTH_COL);
+      const thirdHotelEnd = data["Accommodation Item Name - Same Day 3"] ? `${data["Accommodation Item Name - Same Day 3"]}` : "N/A";
+      pdf.text(`Hotel: ${thirdHotelEnd}`, THIRD_ROW, startY + EIGHTH_COL);
+      const Transfer6 = data["Pre-Rail Transfer Pickup 6"] === "No Pre-Rail Transfer Pickup" ? "N/A" : data["Post-Rail Transfer Pickup 6"];
+      pdf.text(`Transfer: ${Transfer6}`, THIRD_ROW, startY + NINTH_COL);
 
       pdf.setDrawColor(0);
       pdf.setLineWidth(1);
