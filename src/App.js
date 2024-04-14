@@ -29,12 +29,6 @@ const App = () => {
   const [jsonToPrint, setJsonToPrint] = useState([]);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [fileName, setFileName] = useState("");
-  const [showPreview, setShowPreview] = useState(false);
-
-  const togglePreview = () => {
-    setShowPreview(!showPreview);
-  };
-
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       setFileName(file.name); // Set the name of the file for displaying
@@ -48,7 +42,6 @@ const App = () => {
 
       reader.onload = (event) => {
         try {
-          setShowPreview(false);
           const { result } = event.target;
           const workbook = XLSX.read(result, { type: "binary" });
 
