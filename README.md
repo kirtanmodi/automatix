@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# Rocky Mountaineer Ticket System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern web application for managing train passenger data, printing boarding passes, and generating luggage tags for the Rocky Mountaineer train service.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **File Upload**: Supports Excel (.xlsx, .xls) and CSV file formats with passenger data
+- **Station Detection**: Automatically identifies the station based on departure city
+- **Search Functionality**: Search passengers by name or booking number
+- **Sorting**: Sort passenger data by name, booking number, or seat number
+- **Boarding Pass Generation**: Create and print boarding passes as PDF
+- **Luggage Tag System**: Manage luggage counts and generate printable luggage tags
+- **Responsive Design**: Works on both desktop and mobile devices
 
-### `npm start`
+## Usage Instructions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Upload Passenger Data**: 
+   - Drag and drop an Excel or CSV file with passenger information
+   - The system will automatically detect the station based on the departure city
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Search and Sort**:
+   - Use the search bar to find passengers by name or booking number
+   - Click on the column headers to sort by name, booking number, or seat
 
-### `npm test`
+3. **Generate Boarding Passes**:
+   - Click the PDF icon next to a passenger to open the boarding pass dialog
+   - Review passenger details and click "Generate Boarding Pass"
+   - The PDF will be downloaded to your device
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. **Manage Luggage Tags**:
+   - Click the luggage tag icon next to a passenger
+   - Enter the number of luggage items for that passenger
+   - Click "Update Count" to save the luggage count
+   - Click "Generate Tags" to create a PDF with individual luggage tags
+   - Each passenger will receive one tag per luggage item
 
-### `npm run build`
+## File Format Requirements
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The system expects a CSV or Excel file with the following columns:
+- Trip Start Date
+- Guest Name
+- Booking #
+- Guest Route Start City
+- Guest Route End City
+- #Midpoint Bags
+- # Straight Through Bags
+- Ord # (Coach number)
+- Seat #
+- VAN Accomm (Vancouver Accommodation)
+- VAN Transfer
+- KAM Accomm (Kamloops Accommodation)
+- Rockies Accomm
+- Rockies Transfer
+- Circle Journey
+- Personal Guest Information
+- Celebrations
+- Notes
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Development
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This project was built with:
+- React
+- Material-UI
+- jsPDF for PDF generation
+- XLSX for spreadsheet parsing
 
-### `npm run eject`
+### Available Scripts
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `npm start` - Run the development server
+- `npm build` - Build the app for production
+- `npm test` - Run tests
+- `npm run deploy` - Deploy to GitHub Pages
